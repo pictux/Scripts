@@ -8,7 +8,11 @@
 
 NOCONNFILE=/tmp/noconnection.list
 NEW_NOCONNFILE=/tmp/noconnection_tmp.list
-CURL=`pwd`/./ccurl.sh
+CURL=/root/ccurl.sh
+
+if ! [ -r $NOCONNFILE ]; then
+	exit 1
+fi	
 
 mv $NOCONNFILE $NEW_NOCONNFILE
 
