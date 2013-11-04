@@ -14,6 +14,10 @@ NOCONNFILE=/tmp/noconnection.list
 
 EPOCH=`date +%s`
 
+if ! [ "${@}" ]; then
+        exit 1
+fi
+
 if echo "$@" | egrep "time="; then
 	URL="$@"
 else
