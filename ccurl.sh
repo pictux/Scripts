@@ -6,7 +6,7 @@
 #author		: Mirco Piccin (www.xuni.it | www.pictux.org)
 #date		: 2013-11
 #version	: 0.2
-#usage		: sh ccurl.sh $URL
+#usage		: sh ccurl.sh "$URL"
 
 CONNTIMEOUT=5
 OUTFILE=/tmp/curl.out
@@ -24,14 +24,12 @@ else
 	URL="$@&time=$EPOCH"
 fi
 
-curl "$URL" -o $OUTFILE --connect-timeout $CONNTIMEOUT
+curl "$URL" --connect-timeout $CONNTIMEOUT
 
-wait
+CURL_RC=$?
 
-if [ -r $OUTFILE ]; then
-	rm -f $OUTFILE
-else
+if [ $CURL_RC -eq 7 ] || [ $CURL_RC -eq 6 ]; then
 	echo "$URL" >> $NOCONNFILE
-fi	
-
+	exit 1
+fi
 
